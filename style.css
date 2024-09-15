@@ -45,6 +45,11 @@ h2 {
   transition: all 0.3s ease;
 }
 
+.important {
+  color: red;
+  font-weight: bold;
+}
+
 /* Style for label to ensure clickable area is the entire line */
 .item label {
   display: block; /* This keeps the items on separate lines */
