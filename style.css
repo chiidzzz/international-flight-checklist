@@ -8,11 +8,12 @@ body {
 }
 
 .checklist {
+  max-width: 700px;
+  margin: 0 auto 20px auto;
+  padding: 20px;
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  margin-bottom: 20px;
 }
 
 .header {
@@ -45,15 +46,22 @@ h2 {
   transition: all 0.3s ease;
 }
 
-/* .important {
+.important {
   color: red;
   font-weight: bold;
-} */
+  white-space: nowrap; /* Prevents (Very important!) from splitting */
+}
 
-/* Style for label to ensure clickable area is the entire line */
 .item label {
-  display: block; /* This keeps the items on separate lines */
-  cursor: pointer; /* Changes the cursor to pointer when hovering */
+  display: flex;
+  align-items: flex-start;
+  cursor: pointer;
+  gap: 10px;
+}
+
+.item label input[type="checkbox"] {
+  margin-top: 4px;
+  flex-shrink: 0;
 }
 
 /* Style for checkbox */
