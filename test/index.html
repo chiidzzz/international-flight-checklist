@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Personal Travel Checklist — Lebanon ➜ Cyprus</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <header class="header">
+    <div class="brand">
+      <svg class="logo" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M21 16V14L13 9V3.5C13 2.67 12.33 2 11.5 2S10 2.67 10 3.5V9L2 14V16L10 13.5V19L8 20.5V22L11.5 21L15 22V20.5L13 19V13.5L21 16Z"/>
+      </svg>
+      <h1>Travel Checklist</h1>
+    </div>
+
+    <div class="top-actions">
+      <button id="themeToggle" type="button" aria-label="Toggle theme">🌙</button>
+      <button id="printBtn" type="button" title="Print">🖨️ Print</button>
+      <button id="resetBtn" type="button" class="secondary" title="Reset ticks & quantities">↺ Reset</button>
+      <button id="saveBtn" type="button" title="Save locally (download)">💾 Save</button>
+      <button id="loadBtn" type="button" title="Load from a saved file">📂 Load</button>
+      <input id="loadFile" type="file" accept="application/json" hidden />
+      <button id="clearAllBtn" type="button" class="danger" title="Clear everything (profile, theme, ticks, quantities)">🧹 Clear All</button>
+    </div>
+  </header>
+
+  <!-- Trip Profile -->
+  <details class="panel" open>
+    <summary>🧭 Trip Profile</summary>
+    <form id="tripForm">
+      <div class="grid">
+        <label>
+          From
+          <input type="text" id="from" placeholder="Lebanon" value="Lebanon">
+        </label>
+        <label>
+          To
+          <input type="text" id="to" placeholder="Cyprus" value="Cyprus">
+        </label>
+        <label>
+          Month
+          <select id="month">
+            <option>January</option><option>February</option><option>March</option>
+            <option>April</option><option>May</option><option>June</option>
+            <option>July</option><option selected>August</option><option>September</option>
+            <option>October</option><option>November</option><option>December</option>
+          </select>
+        </label>
+        <label>
+          Adults
+          <input type="number" id="adults" min="1" max="6" value="2">
+        </label>
+        <label>
+          Children
+          <input type="number" id="children" min="0" max="6" value="1">
+        </label>
+        <label>
+          Ages (comma-sep)
+          <input type="text" id="childAges" placeholder="e.g., 6" value="6">
+        </label>
+      </div>
+
+      <div class="grid toggles">
+        <label class="switch">
+          <input type="checkbox" id="rentCar" checked>
+          <span>Renting a car (show Driving section)</span>
+        </label>
+        <label class="switch">
+          <input type="checkbox" id="showMilitary">
+          <span>Include Military Gear</span>
+        </label>
+      </div>
+
+      <div class="profile-actions">
+        <button type="button" id="applyProfile">Apply Profile</button>
+      </div>
+    </form>
+  </details>
+
+  <!-- Trip banner -->
+  <div id="tripBanner" class="tripbar" role="note" aria-live="polite"></div>
+
+  <!-- Traveler switcher (for qty counters) -->
+  <div class="traveler-switch" id="travSwitch" aria-label="Select traveler for quantities"></div>
+
+  <!-- SECTION 1 -->
+  <section class="checklist" data-section="documents">
+    <h2>1. DOCUMENTS & MONEY</h2>
+    <div class="item"><label><input type="checkbox"> Passports (6+ months validity)</label></div>
+    <div class="item"><label><input type="checkbox"> Visa / entry requirements checked</label></div>
+    <div class="item"><label><input type="checkbox"> Flight & accommodation confirmations (PDF + offline)</label></div>
+    <div class="item"><label><input type="checkbox"> Travel insurance (medical + trip)</label></div>
+    <div class="item"><label><input type="checkbox"> Credit/debit cards enabled for travel</label></div>
+    <div class="item"><label><input type="checkbox"> Cash in EUR (small notes/coins)</label></div>
+    <div class="item"><label><input type="checkbox"> Emergency contacts (hotel / insurer 24-7 / EU 112)</label></div>
+    <div class="item"><label><input type="checkbox"> Car-rental booking + Driver’s license (+ IDP if required)</label></div>
+    <div class="item"><label><input type="checkbox"> Electronic copies of key documents saved offline</label></div>
+  </section>
+
+  <!-- SECTION 2 -->
+  <section class="checklist" data-section="clothing">
+    <h2>2. CLOTHING & ACCESSORIES</h2>
+    <div class="item quant">
+      <label><input type="checkbox"> Underwear</label>
+      <div class="qty" data-quant="underwear"></div>
+    </div>
+    <div class="item quant">
+      <label><input type="checkbox"> Socks</label>
+      <div class="qty" data-quant="socks"></div>
+    </div>
+    <div class="item quant">
+      <label><input type="checkbox"> Pants / shorts</label>
+      <div class="qty" data-quant="pants"></div>
+    </div>
+    <div class="item quant">
+      <label><input type="checkbox"> Shirts / T-shirts</label>
+      <div class="qty" data-quant="shirts"></div>
+    </div>
+    <div class="item"><label><input type="checkbox"> Swimsuits</label></div>
+    <div class="item"><label><input type="checkbox"> Rash guards / UV swim shirts</label></div>
+    <div class="item"><label><input type="checkbox"> Sleepwear</label></div>
+    <div class="item"><label><input type="checkbox"> Walking shoes</label></div>
+    <div class="item"><label><input type="checkbox"> Flip flops / beach sandals</label></div>
+    <div class="item"><label><input type="checkbox"> Hats / caps</label></div>
+    <div class="item"><label><input type="checkbox"> Sunglasses (UV400)</label></div>
+    <div class="item"><label><input type="checkbox"> Light layer for evenings</label></div>
+    <div class="item"><label><input type="checkbox"> Belt</label></div>
+    <div class="item"><label><input type="checkbox"> Microfiber towel</label></div>
+  </section>
+
+  <!-- SECTION 3 -->
+  <section class="checklist" data-section="toiletries">
+    <h2>3. TOILETRIES</h2>
+    <div class="item"><label><input type="checkbox"> Toothbrushes & toothpaste</label></div>
+    <div class="item"><label><input type="checkbox"> Shower sponge</label></div>
+    <div class="item"><label><input type="checkbox"> Travel-size shampoo / conditioner / body wash</label></div>
+    <div class="item"><label><input type="checkbox"> Deodorant</label></div>
+    <div class="item"><label><input type="checkbox"> Razor / shaver</label></div>
+    <div class="item"><label><input type="checkbox"> Hair wax / brush</label></div>
+    <div class="item"><label><input type="checkbox"> Nail clippers</label></div>
+    <div class="item"><label><input type="checkbox"> Sunscreen SPF 50+</label></div>
+    <div class="item"><label><input type="checkbox"> After-sun / aloe gel + SPF lip balm</label></div>
+  </section>
+
+  <!-- SECTION 4 -->
+  <section class="checklist" data-section="kid">
+    <h2>4. FOR THE KID</h2>
+    <div class="item"><label><input type="checkbox"> Kid-friendly sunscreen</label></div>
+    <div class="item"><label><input type="checkbox"> Water bottle</label></div>
+    <div class="item"><label><input type="checkbox"> Change of clothes (carry-on)</label></div>
+    <div class="item"><label><input type="checkbox"> Beach toys</label></div>
+    <div class="item"><label><input type="checkbox"> Swim jacket / armbands</label></div>
+    <div class="item"><label><input type="checkbox"> Swim goggles</label></div>
+    <div class="item"><label><input type="checkbox"> Tablet + volume-limited headphones</label></div>
+    <div class="item"><label><input type="checkbox"> Favourite snacks + empty bottle (fill after security)</label></div>
+    <div class="item"><label><input type="checkbox"> Travel booster seat (or pre-book with rental)</label></div>
+  </section>
+
+  <!-- SECTION 5 -->
+  <section class="checklist" data-section="electronics">
+    <h2>5. ELECTRONICS</h2>
+    <div class="item"><label><input type="checkbox"> Phones</label></div>
+    <div class="item"><label><input type="checkbox"> SIM / eSIM plan (Cyta / Epic / Primetel)</label></div>
+    <div class="item"><label><input type="checkbox"> Chargers (all devices)</label></div>
+    <div class="item"><label><input type="checkbox"> Power bank</label></div>
+    <div class="item"><label><input type="checkbox"> Type-G travel adapter (Cyprus 230V/50Hz)</label></div>
+    <div class="item"><label><input type="checkbox"> Waterproof phone pouch (beach)</label></div>
+    <div class="item"><label><input type="checkbox"> AirTags / Tile for bags</label></div>
+    <div class="item"><label><input type="checkbox"> Car USB-C/Lightning cable (navigation)</label></div>
+    <div class="item"><label><input type="checkbox"> Laptop / tablet + chargers</label></div>
+    <div class="item"><label><input type="checkbox"> Watch + charger</label></div>
+  </section>
+
+  <!-- SECTION 6 -->
+  <section class="checklist" data-section="health">
+    <h2>6. HEALTH</h2>
+    <div class="item"><label><input type="checkbox"> Insect repellent</label></div>
+    <div class="item"><label><input type="checkbox"> Pain relievers (adult & child)</label></div>
+    <div class="item"><label><input type="checkbox"> Prescription medications</label></div>
+    <div class="item"><label><input type="checkbox"> Band-aids</label></div>
+    <div class="item"><label><input type="checkbox"> Rash cream</label></div>
+    <div class="item"><label><input type="checkbox"> Hand sanitizer & tissues</label></div>
+    <div class="item"><label><input type="checkbox"> Oral rehydration salts</label></div>
+    <div class="item"><label><input type="checkbox"> Motion-sickness tablets</label></div>
+    <div class="item"><label><input type="checkbox"> Digital thermometer</label></div>
+  </section>
+
+  <!-- SECTION 7 -->
+  <section class="checklist" data-section="misc">
+    <h2>7. MISCELLANEOUS</h2>
+    <div class="item"><label><input type="checkbox"> Reusable water bottles</label></div>
+    <div class="item"><label><input type="checkbox"> Beach towels</label></div>
+    <div class="item"><label><input type="checkbox"> Wet bags (for wet swimwear)</label></div>
+    <div class="item"><label><input type="checkbox"> Travel laundry bag</label></div>
+    <div class="item"><label><input type="checkbox"> Car phone holder</label></div>
+    <div class="item"><label><input type="checkbox"> Foldable tote (beach/supermarket)</label></div>
+    <div class="item"><label><input type="checkbox"> Compact beach umbrella / UV pop-up tent</label></div>
+    <div class="item"><label><input type="checkbox"> Apps: Bolt (rides), Foody (delivery)</label></div>
+  </section>
+
+  <!-- SECTION 8 -->
+  <section class="checklist" data-section="home">
+    <h2>8. PREPARE YOUR HOME</h2>
+    <div class="item"><label><input type="checkbox"> Arrange care for pets/plants</label></div>
+    <div class="item"><label><input type="checkbox"> Unplug non-essentials</label></div>
+    <div class="item"><label><input type="checkbox"> Photograph luggage contents (for insurance)</label></div>
+    <div class="item"><label><input type="checkbox"> Transfer media to phone/tablet</label></div>
+    <div class="item"><label><input type="checkbox"> Leave spare house key</label></div>
+    <div class="item"><label><input type="checkbox"> Close gas / lock windows</label></div>
+  </section>
+
+  <!-- SECTION 9 -->
+  <section class="checklist" data-section="driving">
+    <h2>9. DRIVING IN CYPRUS</h2>
+    <div class="item"><label><input type="checkbox"> Drive on the left (overtake on the right)</label></div>
+    <div class="item"><label><input type="checkbox"> Driver’s license(s) + IDP (if requested)</label></div>
+    <div class="item"><label><input type="checkbox"> Credit card in driver’s name (deposit)</label></div>
+    <div class="item"><label><input type="checkbox"> Child booster/seat ready (check law & size)</label></div>
+    <div class="item"><label><input type="checkbox"> Photos of rental at pickup & return</label></div>
+    <div class="item"><label><input type="checkbox"> Know fuel & parking policy; add excess waiver if desired</label></div>
+    <details class="note"><summary>Tip</summary>If placing a child seat in the front (avoid if possible), deactivate the passenger airbag.</details>
+  </section>
+
+  <!-- SECTION 10 -->
+  <section class="checklist" data-section="travelday">
+    <h2>10. TRAVEL DAY & ARRIVAL</h2>
+    <div class="item"><label><input type="checkbox"> Online check-in + offline boarding passes</label></div>
+    <div class="item"><label><input type="checkbox"> Liquids ≤ 100ml in carry-on; meds handy</label></div>
+    <div class="item"><label><input type="checkbox"> Kid’s spare outfit + snacks on top of carry-on</label></div>
+    <div class="item"><label><input type="checkbox"> Leave early for peak summer crowds</label></div>
+    <div class="item"><label><input type="checkbox"> On arrival: SIM/eSIM, ATM cash, ride via Bolt</label></div>
+    <div class="item"><label><input type="checkbox"> Hydrate + sunscreen first thing</label></div>
+  </section>
+
+  <!-- SECTION 11 -->
+  <details class="checklist collapsible" data-section="military">
+    <summary><h2>11. MILITARY GEAR (optional)</h2></summary>
+    <div class="item"><label><input type="checkbox"> Mission order</label></div>
+    <div class="item"><label><input type="checkbox"> Multicam uniform</label></div>
+    <div class="item"><label><input type="checkbox"> Belt</label></div>
+    <div class="item"><label><input type="checkbox"> Beret</label></div>
+    <div class="item"><label><input type="checkbox"> Flight suit (1–2)</label></div>
+    <div class="item"><label><input type="checkbox"> Aviator boots</label></div>
+    <div class="item"><label><input type="checkbox"> Pilot helmet</label></div>
+    <div class="item"><label><input type="checkbox"> Gloves</label></div>
+    <div class="item"><label><input type="checkbox"> Dog tags</label></div>
+    <div class="item"><label><input type="checkbox"> Flight jacket (if applicable)</label></div>
+    <div class="item"><label><input type="checkbox"> Aviator sunglasses</label></div>
+    <div class="item"><label><input type="checkbox"> Green/Beige T-shirts</label></div>
+    <div class="item"><label><input type="checkbox"> Socks</label></div>
+  </details>
+
+  <footer class="footer">
+    <small>Ticks, quantities, profile & theme auto-save locally. Use Save/Load for backups. “Clear All” wipes everything.</small>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
