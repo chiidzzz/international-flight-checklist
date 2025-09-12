@@ -42,35 +42,32 @@ h2 {
 }
 
 .item {
+  position: relative;
   margin-bottom: 15px;
-  transition: all 0.3s ease;
+}
+
+.item label {
+  display: block;
+  padding-left: 40px; /* ⬅️ increase this for more space */
+  text-indent: -5px;
+  line-height: 1.6;
+  cursor: pointer;
+}
+
+.item input[type="checkbox"] {
+  position: absolute;
+  left: 0;
+  top: 3px;
+  transform: scale(1.2);
 }
 
 .important {
   color: red;
   font-weight: bold;
-  white-space: nowrap; /* Prevents (Very important!) from splitting */
+  white-space: nowrap; /* Prevents breaking "(Very important!)" */
 }
 
-.item label {
-  display: flex;
-  align-items: flex-start;
-  cursor: pointer;
-  gap: 10px;
-}
-
-.item label input[type="checkbox"] {
-  margin-top: 4px;
-  flex-shrink: 0;
-}
-
-/* Style for checkbox */
-input[type="checkbox"] {
-  margin-right: 10px;
-  transform: scale(1.2);
-}
-
-/* Dimmed and strike-through effect when the checkbox is checked */
+/* Checked style */
 .item.dimmed {
   opacity: 0.5;
   text-decoration: line-through;
